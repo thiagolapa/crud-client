@@ -14,7 +14,7 @@ Heroku is a cloud platform as a service that supports multiple programming langu
 
 
 It is possible to access the application through the link:
-`https://crud-client.herokuapp.com/`:
+`https://crud-customers.herokuapp.com/`:
 
 ```html
 User: admin
