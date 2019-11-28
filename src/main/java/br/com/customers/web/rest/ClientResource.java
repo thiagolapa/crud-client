@@ -51,8 +51,8 @@ public class ClientResource {
     }
 
     /**
+     * Endpoint to create a new customer.
      * {@code POST  /clients} : Create a new client.
-     *
      * @param clientDTO the client to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new client, or with status {@code 400 (Bad Request)} if the client has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
@@ -70,8 +70,8 @@ public class ClientResource {
     }
 
     /**
+     * Endpoint to edit a new customer.
      * {@code PUT  /clients} : Updates an existing client.
-     *
      * @param clientDTO the client to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated client,
      * or with status {@code 400 (Bad Request)} if the client is not valid,
@@ -91,9 +91,8 @@ public class ClientResource {
     }
 
     /**
+     * endpoint to list all clients.
      * {@code GET  /clients} : get all the clients.
-     *
-
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of clients in body.
      */
     @GetMapping("/clients")
@@ -107,8 +106,8 @@ public class ClientResource {
     }
 
     /**
+     * endpoint to list a customer by id.
      * {@code GET  /clients/:id} : get the "id" client.
-     *
      * @param id the id of the client to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the client, or with status {@code 404 (Not Found)}.
      */
@@ -120,8 +119,8 @@ public class ClientResource {
     }
 
     /**
+     * endpoint to delete a client by id.
      * {@code DELETE  /clients/:id} : delete the "id" client.
-     *
      * @param id the id of the client to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */

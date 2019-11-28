@@ -27,6 +27,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Implementation of customer interface with defined business rules for customer crud.
+ */
 @Service
 @Transactional
 public class ClientServiceImpl implements ClientService {
@@ -66,12 +69,13 @@ public class ClientServiceImpl implements ClientService {
     }
 
     /**
-     *
+     * Method for adding customer addresses.
      * @param client
      * @param clientDTO
      */
     private void createAddress(Client client, ClientDTO clientDTO) {
         if(!clientDTO.getAddresses().isEmpty())
+            // method to remove customer addresses before adding.
             removeAllAddress(clientDTO);
             clientDTO.getAddresses().stream().map(addressDTO -> {
                 addressDTO.setClientId(client.getId());
@@ -80,7 +84,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     /**
-     * remove all address.
+     * Remove all client addresses.
      */
     public void removeAllAddress(ClientDTO clientDTO) {
         if (clientDTO.getId() != null) {
@@ -182,6 +186,10 @@ public class ClientServiceImpl implements ClientService {
         clientRepository.deleteById(id);
     }
 
+    /**
+     * validate required fields on creation.
+     * @param clientDTO
+     */
     @Override
     public void validateCreation(ClientDTO clientDTO) {
         if (clientDTO.getId() != null) {
@@ -193,6 +201,10 @@ public class ClientServiceImpl implements ClientService {
         validateFields(clientDTO);
     }
 
+    /**
+     * validate required fields in editing.
+     * @param clientDTO
+     */
     @Override
     public void validateUpdate(ClientDTO clientDTO) {
         if (clientDTO.getId() == null) {
@@ -205,16 +217,19 @@ public class ClientServiceImpl implements ClientService {
     }
 
     /**
-     *
+     * validate required fields.
      * @param clientDTO
      */
     private void validateFields(ClientDTO clientDTO) {
+        // required field.
         if (clientDTO.getName() == null) {
             ThrowUtils.badRequest("Client must is null", ENTITY_NAME, "clientNameNotNull");
         }
+        // required field.
         if (clientDTO.getMonthlyIncome() == null) {
             ThrowUtils.badRequest("Client cpf already exists", ENTITY_NAME, "clientMonthlyIncomeNotNull");
         }
+        // required field.
         if (clientDTO.getRisk() == null) {
             ThrowUtils.badRequest("Client name already exists", ENTITY_NAME, "clientRiskNotNull");
         }

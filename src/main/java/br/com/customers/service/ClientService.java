@@ -5,10 +5,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Interface for access to business rules.
+ */
 public interface ClientService {
 
     /**
@@ -51,11 +53,13 @@ public interface ClientService {
     void delete(Long id);
 
     /**
+     * Method to validate customer creation.
      * @param clientDTO
      */
     void validateCreation(ClientDTO clientDTO);
 
     /**
+     * Method to validate client editing.
      * @param clientDTO
      */
     void validateUpdate(ClientDTO clientDTO);
