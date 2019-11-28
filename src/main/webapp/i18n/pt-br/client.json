@@ -1,0 +1,35 @@
+{
+  "customersApp": {
+    "client": {
+      "home": {
+        "title": "Clientes",
+        "createLabel": "Criar Cliente",
+        "createOrEditLabel": "Criar/Editar Cliente",
+        "notFound": "Nenhum Cliente encontrado"
+      },
+      "created": "Um novo Cliente foi criado com o identificador {{ param }}",
+      "updated": "Um Cliente foi atualizado com o identificador {{ param }}",
+      "deleted": "Um Cliente foi excluído com o identificador {{ param }}",
+      "delete": {
+        "question": "Tem certeza de que deseja excluir o Cliente {{ id }}?"
+      },
+      "detail": {
+        "title": "Cliente"
+      },
+      "name": "Nome",
+      "monthlyIncome": "Rendimento mensal R$",
+      "risk": "Risco",
+      "createdAt": "Data de cadastro",
+      "updatedAt": "Data de atualização",
+      "addresses": "Endereço",
+      "simulation": "Simulação de empréstimo",
+      "loanAmount": "Valor de empréstimo solicitado R$",
+      "duration": "Duração (Meses)",
+      "resultSimulation": "Resultado da simulação",
+      "totalLoan": "Valor total do empréstimo R$",
+      "numberOfInstallments": "Número de parcelas",
+      "valueOfInstallments": "Valor das parcelas R$",
+      "requestedAmount": "Valor solicitado R$"
+    }
+  }
+}

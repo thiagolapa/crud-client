@@ -1,0 +1,96 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="customersApp.client.home.title">Clients</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-client" [routerLink]="['/client/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span  jhiTranslate="customersApp.client.home.createLabel">
+            Create a new Client
+            </span>
+        </button>
+    </h2>
+
+    <form>
+        <div class="filter-wrapper">
+            <div class="d-flex justify-content-between">
+            <input type="text" class="form-control" name="search" id="field_name" class="form-control bg-white"
+                   (keyup)="loadAll()" [placeholder]="'global.search' | translate" [(ngModel)]="search"/>
+            </div>
+
+            <select class="form-control form-control-white" [(ngModel)]="selectedSex" name="sex" id="field_risk" (click)="changeTab(selectedSex)">
+                <option [ngValue]="null">{{'customersApp.Risk.SELECT' | translate }}</option>
+                <option value="A">{{'customersApp.Risk.A' | translate}}</option>
+                <option value="B">{{'customersApp.Risk.B' | translate}}</option>
+                <option value="C">{{'customersApp.Risk.C' | translate}}</option>
+            </select>
+
+        </div>
+    </form>
+
+
+    <jhi-alert-error></jhi-alert-error>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="alert alert-warning" *ngIf="clients?.length === 0">
+        <span jhiTranslate="customersApp.client.home.notFound">No clients found</span>
+    </div>
+    <div class="table-responsive" *ngIf="!loading &&  clients?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+            <tr>
+            <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
+            <th scope="col" ><span jhiTranslate="customersApp.client.name">Name</span></th>
+            <th scope="col" ><span jhiTranslate="customersApp.client.monthlyIncome">Monthly Income</span></th>
+            <th scope="col" ><span jhiTranslate="customersApp.client.risk">Risk</span></th>
+            <th scope="col" ><span jhiTranslate="customersApp.client.createdAt">Created At</span></th>
+            <th scope="col" ><span jhiTranslate="customersApp.client.updatedAt">Updated At</span></th>
+            <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let client of clients ;trackBy: trackId">
+                <td><a [routerLink]="['/client', client.id, 'view' ]">{{client.id}}</a></td>
+                <td>{{client.name}}</td>
+                <td>{{client.monthlyIncome}}</td>
+                <td jhiTranslate="{{'customersApp.Risk.' + client.risk}}">{{client.risk}}</td>
+                <td>{{client.createdAt | date:'dd/MM/yyyy'}}</td>
+                <td>{{client.updatedAt | date:'dd/MM/yyyy'}}</td>
+                <td class="text-right">
+                    <div class="btn-group">
+                        <button type="submit"
+                                [title]="'entity.action.view' | translate"
+                                [routerLink]="['/client', client.id, 'view' ]"
+                                class="btn btn-round">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                        </button>
+                        <button type="submit"
+                                [title]="'entity.action.simulation' | translate"
+                                [routerLink]="['/client', client.id, 'simulation' ]"
+                                class="btn btn-round">
+                            <fa-icon [icon]="'plus'"></fa-icon>
+                        </button>
+                        <button type="submit"
+                                [title]="'entity.action.edit' | translate"
+                                [routerLink]="['/client', client.id, 'edit']"
+                                class="btn btn-round">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                        </button>
+                        <button type="submit"
+                                [title]="'entity.action.delete' | translate"
+                                [routerLink]="['/client', { outlets: { popup: client.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-round">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div [hidden]="loading || clients?.length === 0" class="mt-4">
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

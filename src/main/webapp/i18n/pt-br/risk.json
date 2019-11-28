@@ -1,0 +1,10 @@
+{
+  "customersApp": {
+    "Risk": {
+      "SELECT": "Selecione o risco",
+      "A": "A",
+      "B": "B",
+      "C": "C"
+    }
+  }
+}

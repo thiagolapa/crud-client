@@ -1,0 +1,113 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate #editForm="ngForm">
+            <div class="d-flex">
+                <h2 id="jhi-simulation-heading" jhiTranslate="customersApp.client.simulation"> - {{client.name}}
+                    Client simulation
+                </h2>
+            </div>
+
+            <jhi-alert-error></jhi-alert-error>
+            <div class="card p-30-40 mt-4 mb-5">
+                <div class="form-group">
+                    <dt><span class="control-label" jhiTranslate="customersApp.client.name">Name</span></dt>
+                    <dd>
+                        <span>{{client.name}}</span>
+                    </dd>
+                </div>
+
+                <div class="form-group">
+                    <dt><span class="control-label" jhiTranslate="customersApp.client.monthlyIncome">Monthly Income</span></dt>
+                    <dd>
+                        <span>{{client.monthlyIncome}}</span>
+                    </dd>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <dt><span class="control-label" jhiTranslate="customersApp.client.risk">Risk</span></dt>
+                    <dd>
+                        <span jhiTranslate="{{'customersApp.Risk.' + client.risk}}">{{client.risk}}</span>
+                    </dd>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label class="control-label" jhiTranslate="customersApp.client.loanAmount" for="field_loanAmount">LoanAmount</label>
+                    <input type="number" class="form-control" name="loanAmount" id="field_loanAmount"
+                           #clientLoanAmount="ngModel" [(ngModel)]="loanAmount" placeholder="R$ 0.00" required/>
+                    <div *ngIf="editForm.controls.loanAmount?.invalid && (editForm.controls.loanAmount?.dirty || editForm.controls.loanAmount?.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.controls.loanAmount?.errors?.required" jhiTranslate="entity.validation.required">
+                            This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               [hidden]="!editForm.controls.loanAmount?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label class="control-label" jhiTranslate="customersApp.client.duration" for="field_duration">Duration</label>
+                    <select class="form-control" name="duration" id="field_duration" #clientDuration="ngModel" [(ngModel)]="duration" required>
+                        <option value=6> 06 meses</option>
+                        <option value=12>12 meses</option>
+                        <option value=24>24 meses</option>
+                        <option value=48>48 meses</option>
+                    </select>
+                    <div *ngIf="editForm.controls.duration?.invalid && (editForm.controls.duration?.dirty || editForm.controls.duration?.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.controls.duration?.errors?.required" jhiTranslate="entity.validation.required">
+                            This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <button type="button" class="btn btn-primary" (click)="simulation()" [disabled]="editForm.invalid">
+                        <span jhiTranslate="entity.action.simulation">Simulation</span>
+                    </button>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <button type="button" class="btn btn-primary" (click)="newSimulation()" [disabled]="editForm.invalid"
+                            [hidden]="!loadingSimulation">
+                        <span jhiTranslate="entity.action.newSimulation">New Simulation</span>
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="d-flex" [hidden]="!loadingSimulation">
+                <h2 id="jhi-simulation-heading2" jhiTranslate="customersApp.client.resultSimulation" [hidden]="!loadingSimulation"> - {{client.name}}
+                    Result simulation
+                </h2>
+            </div>
+            <div class="card p-30-40 mt-4 mb-5" [hidden]="!loadingSimulation">
+                <div class="form-group col-md-4">
+                    <label class="control-label">{{ 'customersApp.client.requestedAmount' | translate }} :</label>
+                    <strong><span>{{ loanAmount }}</span></strong>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="control-label">{{ 'customersApp.client.numberOfInstallments' | translate }} :</label>
+                    <strong><span>{{ duration }}</span></strong>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="control-label">{{ 'customersApp.client.valueOfInstallments' | translate }} :</label>
+                    <strong><span>{{ valueOfInstallments }}</span></strong>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="control-label">{{ 'customersApp.client.totalLoan' | translate }} :</label>
+                    <strong><span>{{ result }}</span></strong>
+                </div>
+            </div>
+
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+        </form>
+    </div>
+</div>

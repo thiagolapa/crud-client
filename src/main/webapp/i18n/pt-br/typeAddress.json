@@ -1,0 +1,11 @@
+{
+  "customersApp": {
+    "TypeAddress": {
+      "null": "",
+      "APARTMENT": "Apartamento",
+      "COMMERCIAL": "Comercial",
+      "HOME": "Casa",
+      "OTHER": "Outro"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "customersApp": {
+    "address": {
+      "home": {
+        "title": "Endereços",
+        "createLabel": "Criar Endereço",
+        "createOrEditLabel": "Criar/Editar Enredeço",
+        "notFound": "Nenhum Enredeço encontrado"
+      },
+      "created": "Um novo Enredeço foi criado com o identificador {{ param }}",
+      "updated": "Um Enredeço foi atualizado com o identificador {{ param }}",
+      "deleted": "Um Enredeço foi excluído com o identificador {{ param }}",
+      "delete": {
+        "question": "Tem certeza de que deseja excluir o Enredeço {{ id }}?"
+      },
+      "detail": {
+        "title": "Enredeço",
+        "noAddress": "Nenhum endereço cadastrado."
+      },
+      "streetAddress": "Rua",
+      "postalCode": "CEP",
+      "typeAddress": "Tipo de endereço",
+      "number": "Número",
+      "complement": "Complemento",
+      "district": "Bairro",
+      "createdAt": "Data de cadastro",
+      "updatedAt": "Data de atualização",
+      "client": "Cliente"
+    }
+  }
+}

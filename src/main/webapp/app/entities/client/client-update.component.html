@@ -1,0 +1,211 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-client-heading" jhiTranslate="customersApp.client.home.createOrEditLabel">Create or edit a Client</h2>
+            <jhi-alert-error></jhi-alert-error>
+            <div class="card p-30-40 mt-4 mb-5">
+                <div class="form-group">
+                    <label class="control-label" for="field_name">{{ 'customersApp.client.name' | translate }}
+                        <span jhiTranslate="global.form.required" class="required"></span>
+                    </label>
+                    <input type="text" class="form-control" name="name" id="field_name"
+                           #clientName="ngModel" [(ngModel)]="client.name" required/>
+                    <div *ngIf="editForm.controls.name?.invalid && (editForm.controls.name?.dirty || editForm.controls.name?.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.controls.name?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.controls.name?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 100 }">
+                        This field cannot be longer than 100 characters.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="field_monthlyIncome"> {{ 'customersApp.client.monthlyIncome' | translate }}
+                        <span jhiTranslate="global.form.required" class="required"></span>
+                    </label>
+                    <input type="number" class="form-control" name="monthlyIncome" id="field_monthlyIncome" (keyup)="updateRisk()" required
+                           #clientMonthlyIncome="ngModel" [(ngModel)]="client.monthlyIncome" placeholder="R$ 0.00"/>
+                    <div *ngIf="editForm.controls.monthlyIncome?.invalid && (editForm.controls.monthlyIncome?.dirty || editForm.controls.monthlyIncome?.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.controls.monthlyIncome?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.monthlyIncome?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="field_monthlyIncome">{{ 'customersApp.client.risk' | translate }}
+                        <span jhiTranslate="global.form.required" class="required"></span>
+                    </label>
+                    <input type="text" class="form-control" name="risk" [(ngModel)] ="client.risk"
+                           id="field_risk" #clientRisk="ngModel" readonly required/>
+                    <div *ngIf="editForm.controls.risk?.invalid && (editForm.controls.risk?.dirty || editForm.controls.risk?.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.controls.risk?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+
+                <div class="form-group col-md-4">
+                    <button type="button" class="btn btn-primary" (click)="newAddress()">
+                        <span jhiTranslate="entity.action.new">New Address</span>
+                    </button>
+                </div>
+
+
+
+
+
+
+                <div class="card p-30-40 mt-4 mb-5" [hidden]="!loadingNewAddress">
+                    <div class="form-group col-md-4">
+                        <label class="control-label" for="field_streetAddress">{{ 'customersApp.address.streetAddress' | translate }}
+                            <span jhiTranslate="global.form.required" class="required"></span>
+                        </label>
+                        <input type="text" class="form-control" name="streetAddress" [(ngModel)] ="address.streetAddress"
+                               id="field_streetAddress" #addressStreetAddress="ngModel" required/>
+                        <div *ngIf="editForm.controls.streetAddress?.invalid && (editForm.controls.streetAddress?.dirty || editForm.controls.streetAddress?.touched)">
+                            <small class="form-text text-danger"
+                                   *ngIf="editForm.controls.streetAddress?.errors?.required" jhiTranslate="entity.validation.required">
+                                This field is required.
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label class="control-label" for="field_postalCode">{{ 'customersApp.address.postalCode' | translate }}
+                            <span jhiTranslate="global.form.required" class="required"></span>
+                        </label>
+                        <input type="text" class="form-control" name="postalCode" [(ngModel)] ="address.postalCode"
+                               id="field_postalCode" #addressPostalCode="ngModel" required/>
+                        <div *ngIf="editForm.controls.postalCode?.invalid && (editForm.controls.postalCode?.dirty || editForm.controls.postalCode?.touched)">
+                            <small class="form-text text-danger"
+                                   *ngIf="editForm.controls.postalCode?.errors?.required" jhiTranslate="entity.validation.required">
+                                This field is required.
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label class="control-label" for="field_typeAddress">{{ 'customersApp.address.typeAddress' | translate }}
+                            <span jhiTranslate="global.form.required" class="required"></span>
+                        </label>
+                        <select class="form-control" name="typeAddress" [(ngModel)] ="address.typeAddress"
+                                id="field_typeAddress" #addressTypeAddress="ngModel" required>
+                            <option value="APARTMENT">{{'customersApp.TypeAddress.APARTMENT' | translate}}</option>
+                            <option value="COMMERCIAL">{{'customersApp.TypeAddress.COMMERCIAL' | translate}}</option>
+                            <option value="HOME">{{'customersApp.TypeAddress.HOME' | translate}}</option>
+                            <option value="OTHER">{{'customersApp.TypeAddress.OTHER' | translate}}</option>
+                        </select>
+                        <div *ngIf="editForm.controls.typeAddress?.invalid && (editForm.controls.typeAddress?.dirty || editForm.controls.typeAddress?.touched)">
+                            <small class="form-text text-danger"
+                                   *ngIf="editForm.controls.typeAddress?.errors?.required" jhiTranslate="entity.validation.required">
+                                This field is required.
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label class="control-label" for="field_number">{{ 'customersApp.address.number' | translate }}</label>
+                        <input type="number" class="form-control" name="number" [(ngModel)] ="address.number"
+                               id="field_number" #addressNumber="ngModel"/>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label class="control-label" jhiTranslate="customersApp.address.complement" for="field_complement">Complement</label>
+                        <input type="text" class="form-control" name="complement" [(ngModel)] ="address.complement"
+                               id="field_complement" #addressComplement="ngModel"/>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label class="control-label" for="field_district">{{ 'customersApp.address.district' | translate }}
+                            <span jhiTranslate="global.form.required" class="required"></span>
+                        </label>
+                        <input type="text" class="form-control" name="district" [(ngModel)] ="address.district"
+                               id="field_district" #addressDistrict="ngModel" required/>
+                        <div *ngIf="editForm.controls.district?.invalid && (editForm.controls.district?.dirty || editForm.controls.district?.touched)">
+                            <small class="form-text text-danger"
+                                   *ngIf="editForm.controls.district?.errors?.required" jhiTranslate="entity.validation.required">
+                                This field is required.
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <button type="button" class="btn btn-primary" (click)="addAddress()" [disabled]="!verifyAddress() || isSaving">
+                            <span jhiTranslate="entity.action.add">Add</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div *ngIf="client.addresses && client.addresses.length">
+                    <h2 class="mt-3" jhiTranslate="customersApp.address.detail.title" *ngIf="client.addresses && client.addresses.length"></h2>
+                    <br/>
+                    <div class="table-responsive" *ngIf="client.addresses && client.addresses.length">
+                        <table class="table text-center">
+                            <thead>
+                            <th>
+                                <span jhiTranslate="customersApp.address.streetAddress">streetAddress</span>
+                                <span class="fa fa-sort"></span>
+                            </th>
+                            <th>
+                                <span jhiTranslate="customersApp.address.postalCode">postalCode</span>
+                            </th>
+                            <th>
+                                <span jhiTranslate="customersApp.address.district">district</span>
+                            </th>
+                            <th>
+                                <span jhiTranslate="customersApp.address.number">number</span>
+                            </th>
+                            <th>
+                                <span jhiTranslate="customersApp.address.typeAddress">typeAddress</span>
+                            </th>
+                            <th></th>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let address of client.addresses ;trackBy: trackId">
+                                <td class="align-middle">{{address.streetAddress}}</td>
+                                <td class="align-middle">{{address.postalCode}}</td>
+                                <td class="align-middle">{{address.district}}</td>
+                                <td class="align-middle">{{address.number}}</td>
+                                <td class="align-middle" jhiTranslate="{{'customersApp.TypeAddress.' + address.typeAddress}}">{{address.typeAddress}}</td>
+                                <td class="align-middle">
+                                    <div class="btn-group flex-btn-group-container">
+                                        <button type="button" class="btn btn-danger btn-sm" replaceUrl="true" [title]="'entity.action.remove' | translate"
+                                                queryParamsHandling="merge" (click)="removeAddress(address.streetAddress)">
+                                            <fa-icon [icon]="'times'"></fa-icon>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div *ngIf="!client.addresses || !client.addresses.length">
+                        <h5 jhiTranslate="customersApp.address.detail.noAddress"></h5>
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
